@@ -160,9 +160,14 @@ uv run your-script-name
 
 ---
 
+```bash
+dir ---> check path
+```
+
 ## ✅ Example Flow
 
 ```bash
+uv -- version
 uv init project_1
 cd project_1
 uv add typer rich
