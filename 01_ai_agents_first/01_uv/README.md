@@ -1,8 +1,6 @@
 
 # ⚡ Python UV – The Ultimate Guide to the Fastest Python Package Manager
 
-![Python + UV](https://raw.githubusercontent.com/astral-sh/uv/main/assets/logo.svg)
-
 > 🚀 **UV** is the **blazing fast** Python package manager & virtual environment tool — designed to simplify, speed up, and streamline your development workflow.
 
 ---
@@ -109,7 +107,7 @@ uv add fastapi@0.110.0
 If you're planning to create a **packaged application**, such as a CLI tool or a project for PyPI:
 
 ```bash
-uv init --package example-pkg
+uv init project_1
 ```
 
 This sets up the right folder structure:
@@ -165,8 +163,8 @@ uv run your-script-name
 ## ✅ Example Flow
 
 ```bash
-uv init --package resume-cli
-cd resume-cli
+uv init project_1
+cd project_1
 uv add typer rich
 uv run src/main.py
 ```
@@ -183,6 +181,4 @@ Now you're ready to build and run a full CLI app!
 
 ---
 
-**Crafted with ❤️ by Hadiqa Gohar**
-
-```
+**Crafted with ❤️ by Hadiqa Gohar*
