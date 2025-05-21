@@ -174,6 +174,13 @@ uv add typer rich
 uv run src/main.py
 ```
 
+## 📦 requirements.txt vs pyproject.toml
+
+```bash
+❌ requirements.txt is now considered legacy
+✅ pyproject.toml is the modern, structured and officially recommended approach
+```
+
 Now you're ready to build and run a full CLI app!
 
 ---
