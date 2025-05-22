@@ -95,6 +95,16 @@ Visit: [http://localhost:8000](http://localhost:8000)
 **Q:** Can I use multiple agents with Chainlit?
 **A:** Conceptually yes — by integrating logic in Python, routing and orchestration patterns can be simulated.
 
+## 📚 Additional Learning Resources
+
+For deeper understanding of agentic AI concepts, explore my related project:
+
+🔗 [Understanding Agentic AI Concepts](https://github.com/HadiqaGohar/Q4-Exploring-Generative-AI/tree/main/Task%2007%3A%20Understanding%20Agentic%20AI%20Concepts)
+
+---
+
+Agar chaho, main full updated README me ye bhi add kar doon? Ya koi aur style chahiye?
+
 ---
 
 ## 🧑‍💻 Author
