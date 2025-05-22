@@ -5,8 +5,7 @@ This repository contains a simple **Chainlit chatbot** (HelloWorld app) that I b
 
 ---
 
-![Screenshot](https://github.com/HadiqaGohar/learn-agentic-ai/raw/main/05_chainlit/helloworld/Screenshot%20from%202025-05-22%2022-06-11.png)
-
+![Screenshot](https://github.com/HadiqaGohar/learn-agentic-ai/blob/main/01_ai_agents_first/05_chainlit/helloworld/Screenshot%20from%202025-05-22%2022-06-11.png
 ## 🚀 Features
 
 - ✅ Built using [Chainlit](https://www.chainlit.io/)
