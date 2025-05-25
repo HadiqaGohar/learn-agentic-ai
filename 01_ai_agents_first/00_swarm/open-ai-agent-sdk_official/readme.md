@@ -124,3 +124,79 @@ Built-in tracing aapko apne workflows ko **visualize (tasawwur karna), debug (gh
 
 * **Explanation:** Tracing aik tarah se aapke agent ke kaam karne ka poora record rakhta hai. Aap dekh sakte hain ke agent ne kya socha, kaun sa tool use kiya, kab koi handoff kiya, aur guardrails ne kab check kiya. Yeh aapko kisi bhi masle ko samajhne aur theek karne mein bohot madad karta hai. Iske sath hi, OpenAI ke mazeed tools bhi available hotay hain jin se aap apne agents ki performance ko behtar bana sakte hain.
 
+---
+---
+---
+
+
+### Code Explanation: OpenAI Agents SDK (Hello World)
+
+Yeh code aapko dikhata hai ke aap OpenAI Agents SDK ko kaise install kar sakte hain aur ek bohot hi bunyadi (basic) "Hello World" example kaise chala sakte hain.
+
+---
+
+### Installation (انسٹالیشن)
+
+```bash
+pip install openai-agents
+```
+
+* **Explanation:** Yeh pehla step hai. Jab aapko koi Python package istemal karna hota hai, to usay pehle apne system par install karna hota hai. `pip` Python ka package manager hai. Yeh command aapke computer par **OpenAI Agents SDK** ko download aur install kar dega. Isay chalanay ke liye aapko apna terminal (command prompt) khol kar yeh command likhna hoga.
+
+---
+
+### Hello World Example (ہیلو ورلڈ ایگزامپل)
+
+```python
+from agents import Agent, Runner
+
+agent = Agent(name="Assistant", instructions="You are a helpful assistant")
+
+result = Runner.run_sync(agent, "Write a haiku about recursion in programming.")
+print(result.final_output)
+```
+
+* **`from agents import Agent, Runner`**
+    * **Explanation:** Yeh line **OpenAI Agents SDK** se do khaas cheezein import kar rahi hai:
+        * **`Agent`**: Yeh woh class hai jis se aap apna AI **agent** banate hain. Agent woh AI entity hai jo kaam karegi.
+        * **`Runner`**: Yeh woh class hai jo aapke agent ko chalanay (run) mein madad karti hai.
+
+* **`agent = Agent(name="Assistant", instructions="You are a helpful assistant")`**
+    * **Explanation:** Yahan hum apna pehla **agent** bana rahe hain.
+        * `name="Assistant"`: Hum is agent ko ek **naam** de rahe hain, jo "Assistant" hai.
+        * `instructions="You are a helpful assistant"`: Yeh sab se ahem hissa hai. Ye agent ko bata raha hai ke uska **maqsad** kya hai aur usay kya karna hai. Yahan hum usay keh rahe hain ke "Aap ek madadgar assistant hain." Yeh uski bunyadi personality aur role set karta hai. LLM (Large Language Model) in instructions ko follow karte hue jawab dega.
+
+* **`result = Runner.run_sync(agent, "Write a haiku about recursion in programming.")`**
+    * **Explanation:** Yeh woh line hai jahan hum apne **agent** ko **actual kaam** de rahe hain.
+        * `Runner.run_sync()`: `Runner` class ka yeh method (function) agent ko **sync (synchronously)** chalata hai, matlab yeh code tab tak wait karega jab tak agent apna kaam mukammal na kar le.
+        * `agent`: Hum yahan bata rahe hain ke kis **agent** ko chalana hai (jo humne "Assistant" ke naam se banaya hai).
+        * `"Write a haiku about recursion in programming."`: Yeh woh **prompt** ya **sawal** hai jo hum apne agent se pooch rahe hain. Agent is instructions aur is sawal ki buniyad par apna jawab banayega.
+        * `result`: Jo bhi jawab agent deta hai, woh is `result` variable mein store ho jayega.
+
+* **`print(result.final_output)`**
+    * **Explanation:** Jab agent apna jawab de chuka hota hai, to us jawab ko console (screen) par print karne ke liye yeh line istemal hoti hai. `result.final_output` agent ka aakhri aur mukammal jawab hota hai.
+
+---
+
+### Expected Output (Mutawaqqo Natija)
+
+```
+# Code within the code,
+# Functions calling themselves,
+# Infinite loop's dance.
+```
+
+* **Explanation:** Jab aap yeh code chalayenge, to aapka "Assistant" agent `instructions` aur `prompt` ki buniyad par recursion par ek haiku likh kar dega, jaisa ke upar dikhaya gaya hai.
+
+---
+
+### Important Note (Zaroori Hidayat)
+
+```bash
+(If running this, ensure you set the OPENAI_API_KEY environment variable)
+
+export OPENAI_API_KEY=sk-...
+```
+
+* **Explanation:** OpenAI ke APIs (jinhein Agents SDK istemal karta hai) ko use karne ke liye aapko ek **API key** ki zaroorat hoti hai. Yeh ek khaas secret code hota hai jo aapko OpenAI ki website par milta hai jab aap account banate hain.
+    * `export OPENAI_API_KEY=sk-...`: Yeh command aapke terminal mein **`OPENAI_API_KEY`** naam ka ek **environment variable** set karta hai. `sk-...` ki jagah aapko apni asal OpenAI API key paste karni hogi. Yeh key aapke code ko OpenAI ke servers se connect karne ki ijazat deti hai. Is command ko aapko code chalanay se **pehle** apne terminal mein run karna hoga.
