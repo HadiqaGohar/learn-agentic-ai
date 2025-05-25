@@ -69,3 +69,58 @@ OpenAI Agents SDK ek halka-phulka aur istemal karne mein aasaan Python package h
 ### Q6: **Swarm** aur **OpenAI Agents SDK** ke darmiyan kya rishta hai? Kya SDK Swarm ke data ke liye abstraction ka istemal karta hai? 🔗
 
 Ji haan, OpenAI Agents SDK apne predecessor **Swarm** ki complexity ko **abstract** karta hai. Swarm ek pehle ka experimental framework tha, aur SDK us par iski andaruni pecheeda details ko chhupa kar aur ek simplified, zyada accessible interface faraham kar ke aage badhta hai. Iska matlab hai ke developers ko Swarm ke bunyadi architecture ko samajhne ki zaroorat nahi hoti; woh seedhe SDK ke high-level primitives (Agents, Handoffs, Guardrails) ka istemal kar ke powerful applications bana sakte hain, Swarm ki asl complexity se deal kiye baghair. Bunyadi taur par, SDK Swarm ki core functionalities ke upar ek user-friendly layer ka kaam karta hai.
+
+---
+---
+---
+
+
+## Agents SDK Ko Kyun Istimal Karein? 🤖✨ (Why use the Agents SDK?)
+
+OpenAI Agents SDK ko do khaas usoolon (design principles) ko zehn mein rakh kar banaya gaya hai:
+
+1. **Zaroori Features, Magar Seekhna Aasaan 📚:** Is mein itne features hain ke yeh aapke liye kaaram ho, lekin primitives (bunyadi cheezein) itni kam hain ke isay jaldi seekha ja sake. Matlab, yeh powerful bhi hai aur isay samajhna bhi mushkil nahi.
+2. **Out-of-the-Box Acha Kaam 🚀, Magar Aapki Marzi Se Customization 🎨:** Yeh bina kisi khaas set up ke foran acha kaam karta hai, lekin aap apni marzi ke mutabiq har cheez ko customize (tarteeb) kar sakte hain.
+
+---
+
+### SDK Ke Bunyadi Features (Main Features of the SDK) 🛠️
+
+Yahaan SDK ke bunyadi features ki tafseel hai:
+
+#### 1. Agent Loop (ایجنٹ لوپ) 🔄
+
+Is mein ek built-in agent loop hai jo **tools ko call karna**, **results ko LLM tak bhejna**, aur tab tak loop karte rehna jab tak LLM apna kaam mukammal na kar le, sab kuch khud hi sambhal leta hai.
+
+* **Explanation:** Sochian agent ko koi kaam diya gaya hai. Agent loop us kaam ko mukammal karne ke liye zaroori steps ko khud-ba-khud control karta hai. Maslan, agar agent ko web search karni hai, to loop tool ko call karega, search ke results LLM (AI brain) ko dega, aur agar mazeed search ki zaroorat hai to ye cycle (dauraan) chalata rahega jab tak ke LLM apna jawab tayar na kar le. Aapko is saare process ko manually code karne ki zaroorat nahi padti.
+
+#### 2. Python-First (پائتھن فرسٹ) 🐍
+
+Nayi abstractions (pecheeda concepts) seekhne ki bajaye, aap Python ki built-in language features ko istemal kar sakte hain agents ko orchestrate (munazzam) aur chain (ek doosre se jorna) karne ke liye.
+
+* **Explanation:** Iska matlab hai ke agar aapko Python aati hai, to aap is SDK ko aasani se use kar sakte hain. Aapko koi bilkul nayi programming language ya mushkil tareeqay nahi seekhne padenge sirf agents ko apas mein jorne ya unse kaam karwane ke liye. Python ki apni functions aur libraries ka istemal karte hue aap agents ke flows ko control kar sakte hain.
+
+#### 3. Handoffs (ہینڈ آفز) 🤝
+
+Yeh ek bohot powerful feature hai jo **multiple agents ke darmiyan coordination (talamel) aur delegation (zimmedari saupna)** mein madad karta hai.
+
+* **Explanation:** Agar aapka AI system ek se zyada agents par mushtamil hai aur har agent ka apna khaas kaam hai, to Handoffs unhein apas mein smoothly kaam tafweez karne ki ijazat dete hain. Misal ke taur par, ek general query agent kisi scientific sawal ko ek scientific research agent ko hand off kar sakta hai. Is se poora system zyada efficient aur focused ho jata hai.
+
+#### 4. Guardrails (گارڈ ریلز) 🚧
+
+Yeh aapko **input validations aur checks** ko apne agents ke parallel mein chalane ki ijazat dete hain, aur agar checks fail ho jaayen to kaam ko foran rokte hain.
+
+* **Explanation:** Guardrails aik security aur quality check point ki tarah kaam karte hain. Jab bhi agent ko koi input milta hai ya woh koi output generate karne wala hota hai, Guardrails usay check karte hain. Agar input ya output hamari guidelines ke mutabiq nahi hai (maslan, galat format, ya harmful content), to Guardrail us process ko waheen rok deta hai. Is se galat ya gair-zaroori information ko system mein aanay ya bahar jaane se roka jaata hai.
+
+#### 5. Function Tools (فنکشن ٹولز) ⚙️
+
+Aap kisi bhi Python function ko ek tool mein badal sakte hain, **automatic schema generation** aur **Pydantic-powered validation** ke saath.
+
+* **Explanation:** Ye SDK ki aik bohot bari sahulat hai. Agar aapne Python mein koi function likha hai jo koi khaas kaam karta hai (maslan, database se data nikalna, email bhejna, ya weather check karna), to aap us function ko Agent ke liye aik tool bana sakte hain. SDK khud-ba-khud us tool ki tafseelat (schema) generate kar dega, aur Pydantic ki madad se us tool ke inputs aur outputs ki validation bhi ho sakegi, jis se ghaltiyon ka imkaan kam ho jayega.
+
+#### 6. Tracing (ٹریسنگ) 🔍
+
+Built-in tracing aapko apne workflows ko **visualize (tasawwur karna), debug (ghaltiyan theek karna)** aur **monitor (nigraani karna)** karne ki ijazat deta hai, is ke elawa aap OpenAI ke evaluation, fine-tuning aur distillation tools ka bhi istemal kar sakte hain.
+
+* **Explanation:** Tracing aik tarah se aapke agent ke kaam karne ka poora record rakhta hai. Aap dekh sakte hain ke agent ne kya socha, kaun sa tool use kiya, kab koi handoff kiya, aur guardrails ne kab check kiya. Yeh aapko kisi bhi masle ko samajhne aur theek karne mein bohot madad karta hai. Iske sath hi, OpenAI ke mazeed tools bhi available hotay hain jin se aap apne agents ki performance ko behtar bana sakte hain.
+
