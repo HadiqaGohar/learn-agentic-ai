@@ -200,3 +200,117 @@ async def main():
 ---
 
 Yeh code Guards aur Tripwires ke concept ko achhe se samjhata hai, khas taur par ke kaise woh Agent ke execution flow ko control karte hain. Aapne dekha ke Input Guardrail user ke sawal ko check karta hai, aur Output Guardrail Agent ke jawab ko.
+
+### Full Source Code 
+
+```
+# zaroori modules import kiye ja rahe hain
+import os  # system-level environment variables handle karne ke liye
+from dotenv import load_dotenv  # .env file se environment variables load karne ke liye
+from agents import Agent, Runner, AsyncOpenAI, OpenAIChatCompletionsModel, InputGuardrail, GuardrailFunctionOutput
+from agents.run import RunConfig  # run karne ke config ke liye
+from pydantic import BaseModel  # data validation ke liye (type checking)
+
+# .env file se environment variables load karo
+load_dotenv()
+gemini_api_key = os.getenv("GEMINI_API_KEY")  # GEMINI_API_KEY environment se nikala gaya
+
+# agar key nahi mili to error throw karo
+if not gemini_api_key:
+    raise ValueError("Your GEMINI_API_KEY is not working!")  # key missing hone par error dikhai jati hai
+
+# External LLM (Language Model) client configure karo
+external_client = AsyncOpenAI(
+    api_key=gemini_api_key,  # upar wali key use kar ke
+    base_url="https://generativelanguage.googleapis.com/v1beta/openai/",  # Gemini ka endpoint
+)
+
+# Gemini model ka wrapper banaya gaya
+model = OpenAIChatCompletionsModel(
+    openai_client=external_client,
+    model="gemini-2.0-flash",  # Gemini 2.0 ka fast version use ho raha hai
+)
+
+# run ke configuration set karo
+config = RunConfig(
+    model=model,
+    model_provider=external_client,
+    tracing_disabled=True  # debug tracing band hai
+)
+
+# yeh ek data model hai jo guardrail ke output ko validate karega
+class HomeworkOutput(BaseModel):
+    is_homework: bool  # kya user ka sawal homework se related hai?
+    reasoning: str  # reasoning batayega ke kyu aesa kaha gaya
+
+# guardrail agent banaya gaya — iska kaam hai dekhna ke sawal homework ka hai ya nahi
+guardrail_agent = Agent(
+    name="Guardrail check",  # agent ka naam
+    instructions="Check if the user is asking about homework.",  # kya karna hai agent ko
+    output_type=HomeworkOutput,  # output kis format mein chahiye
+    model=model  # kaunsa model use hoga
+)
+
+# Math subject ke liye alag agent banaya gaya
+math_tutor_agent = Agent(
+    name="Math Tutor",
+    handoff_description="Specialist agent for math questions",  # jab agent forward hoga to yeh description dikhegi
+    instructions="You provide help with math problems. Explain your reasoning at each step and include examples.",  # is agent ko math ka expert banaya gaya
+    model=model
+)
+
+# History subject ke liye bhi alag agent
+history_tutor_agent = Agent(
+    name="History Tutor",
+    handoff_description="Specialist agent for historical questions",  # handoff description
+    instructions="You provide assistance with historical queries. Explain important events and context clearly.",  # yeh historical cheeze explain karega
+    model=model
+)
+
+# ----------------------------------------------IMPORTANT FUNCTIONALITY------------------------------------------------
+
+
+# yeh guardrail function hai — yeh dekhega ke input homework ka hai ya nahi
+# agar nahi hai to bhi program rokega nahi
+
+# ctx (Context - Mahaul ya Haalaat):
+async def homework_guardrail(ctx, agent, input_data):
+    result = await Runner.run(guardrail_agent, input_data, context=ctx.context, run_config=config)  # guardrail agent ko run karo
+    final_output = result.final_output_as(HomeworkOutput)  # output ko HomeworkOutput format mein convert karo
+    if not final_output.is_homework:
+        print("⚠️ Warning: This input does not appear to be a homework question.")  # agar homework nahi hai to warning
+    return GuardrailFunctionOutput(
+        output_info=final_output,
+        tripwire_triggered=False  # input ko allow karo aage jane ke liye
+    )
+
+# ----------------------------------------------IMPORTANT FUNCTIONALITY------------------------------------------------
+
+
+
+
+
+
+# yeh main agent hai jo decide karega ke kaunsa tutor (math ya history) use karna hai
+# ye main agent he last wala jis ke pass sub info he
+triage_agent = Agent(
+    name="Triage Agent",  # agent ka naam
+    instructions="You determine which agent to use based on the user's homework question.",  # iska kaam routing karna hai
+    handoffs=[history_tutor_agent, math_tutor_agent],  # dono subject agents ko handoff ke liye register kiya gaya
+    input_guardrails=[
+        InputGuardrail(guardrail_function=homework_guardrail),  # guardrail function attach kiya gaya
+    ],
+    model=model
+)
+
+# ab hum triage agent ko run kar rahe hain history related question ke liye
+result = Runner.run_sync(triage_agent, "Add both 2 and 3 and give me answer?", run_config=config)
+print("\n✅ Result 1:", result.final_output)  # output print karo
+
+# ab ek philosophical question diya gaya hai — yeh guardrail se pass ho jayega lekin warning milegi
+result = Runner.run_sync(triage_agent, "What is life", run_config=config)
+print("\n✅ Result 2:", result.final_output)  # output print karo
+
+result = Runner.run_sync(triage_agent, "Who is the first governor of pakistan?", run_config=config)
+print("\n✅ Result 3:", result.final_output)
+```
