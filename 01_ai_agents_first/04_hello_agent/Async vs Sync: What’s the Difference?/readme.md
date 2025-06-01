@@ -62,12 +62,6 @@ asyncio.run(main())
 
 ---
 
-## 📸 Infographic
-
-![Async vs Sync Infographic](./A_flat-style_digital_illustration_infographic_comp.png)
-
----
-
 ## 🧑‍💻 Author
 
 **Hadiqa Gohar**
