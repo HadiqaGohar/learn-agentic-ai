@@ -72,21 +72,3 @@ asyncio.run(main())
 
 **Hadiqa Gohar**
 [LinkedIn](https://www.linkedin.com/in/hadiqagohar/) | [Medium](https://medium.com/@hadiqagohar12) | [GitHub](https://github.com/hadiqagohar)
-
----
-
-## 📌 License
-
-This project is licensed under the MIT License.
-
-```
-
----
-
-Let me know if you’d like:
-- Urdu-English hybrid version?
-- React or JS version of this example?
-- Blog badge or deployment info?
-
-I’m here to help polish it more!
-```
